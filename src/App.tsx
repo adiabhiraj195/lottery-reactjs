@@ -1,19 +1,21 @@
 import './App.css';
 import React from 'react';
-// import ConnectWallet from './components/connect-button';
-import ConnectWalletScnd from './components/connect-wallet-button/connect-button-scnd';
-import { log } from 'console';
+import ConnectWallet from './components/connect-wallet-button/connect-button';
 import useContract from './hooks/useContract';
 
 function App() {
-  const { chainIdHex } = useContract();
-  // log("hii")
+  const { chainId, enterLottery } = useContract();
+  console.log("hii")
+  console.log(chainId)
 
   return (
     <div className="App">
-      <div>{parseInt(chainIdHex as string)}</div>
-      {/* <ConnectWallet />  */}
-      <ConnectWalletScnd />
+      {/* <div>{chainId}</div> */}
+      <ConnectWallet />
+      <button onClick={async () => await enterLottery()}>
+        Enter Lottery
+      </button>
+      {/* <ConnectWalletScnd /> */}
     </div>
   );
 }

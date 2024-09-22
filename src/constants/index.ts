@@ -1,4 +1,4 @@
 import abi from "./abi.json";
-import contractAddress from "./contractAddresses.json"
+import contractAddresses from "./contractAddresses.json"
 
-export { abi, contractAddress };
+export { abi, contractAddresses };
