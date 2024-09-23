@@ -45,5 +45,8 @@
   },
   "overrides": {
     "react-refresh": "0.11.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.12"
   }
 }

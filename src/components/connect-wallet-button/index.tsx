@@ -4,7 +4,7 @@ import { useMoralis } from 'react-moralis'
 
 export default function ConnectWallet() {
     const { enableWeb3, account, isWeb3Enabled, isWeb3EnableLoading, Moralis, deactivateWeb3 } = useMoralis();
-    console.log(account, isWeb3Enabled);
+    // console.log(account, isWeb3Enabled);
 
     useEffect(() => {
         if (

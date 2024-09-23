@@ -7,11 +7,10 @@ const useContract = () => {
     const { chainId: chainIdHex, isWeb3Enabled, Moralis } = useMoralis();
     const chainId: number = parseInt(chainIdHex as string);
 
-    const [minEntranceFee, setMinEntranceFee] = useState("0")
+    const lotteryAddress: string = contractAddresses[31337][0];
 
-    // const lotteryAddress: string = chainId in contractAddresses ? contractAddresses[chainId][0] : null
-    const lotteryAddress: string = contractAddresses[31337][0]; //have to handel it for improve dynamics
-    // console.log(lotteryAddress)
+    const v = "10000000000000000";
+
 
     const {
         runContractFunction: enterLottery,
@@ -22,10 +21,10 @@ const useContract = () => {
         abi: abi,
         contractAddress: lotteryAddress,
         functionName: "enterLottery",
-        msgValue: minEntranceFee,
+        msgValue: v.toString(),
         params: {},
     })
-
+    // console.log(enterTxResponse, isLoading, isFetching)
     const {
         runContractFunction: getEntranceFee,
     } = useWeb3Contract({
@@ -55,28 +54,41 @@ const useContract = () => {
         functionName: "getInterval",
         params: {},
     })
+    const { runContractFunction: getLastTimeStamp } = useWeb3Contract({
+        abi: abi,
+        contractAddress: lotteryAddress,
+        functionName: "getLastTimeStamp",
+        params: {},
+    })
+    const { runContractFunction: getLotteryState } = useWeb3Contract({
+        abi: abi,
+        contractAddress: lotteryAddress,
+        functionName: "getLotteryState",
+        params: {},
+    })
 
-    async function lotteryEntranceFee() {
-        const fee: string = (await getEntranceFee() as string).toString();
-        setMinEntranceFee(ethers.formatUnits(fee, "ether"));
+    async function getLotteryEntranceFee() {
+        return (await getEntranceFee() as string)?.toString();
+        // setMinEntranceFee(ethers.formatUnits(fee, "ether"));
         // console.log(fee)
     }
 
-    useEffect(() => {
-        if (isWeb3Enabled) {
-            lotteryEntranceFee();
-        }
-    }, [isWeb3Enabled])
+
 
 
 
     return {
         chainId,
-        minEntranceFee,
         enterLottery,
         getPlayersNumber,
         getRecentWinner,
-        getInterval
+        getInterval,
+        getLotteryEntranceFee,
+        getLastTimeStamp,
+        getLotteryState,
+        isLoading,
+        contractAddress: lotteryAddress,
+
     }
 }
 
